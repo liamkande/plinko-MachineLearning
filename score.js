@@ -2,31 +2,47 @@ const outputs = [];
 
 function onScoreUpdate(dropPosition, bounciness, size, bucketLabel) {
   // Ran every time a balls drops into a bucket
-  outputs.push([dropPosition, bounciness, size, bucketLabel])
-  
+  outputs.push([dropPosition, bounciness, size, bucketLabel]);
 }
 
-const predictionPoint = 300
-const k = 3
+const predictionPoint = 300;
+const k = 3;
 
-function distance(point) {
-  return Math.abs(point - predictionPoint)
-}
+const runAnalysis = () => {
+  const testSize = 10
+  const [testSet, trainngSet] = splitDataset(outputs, 10);
 
-function runAnalysis() {
-  // Write code here to analyze stuff
-const bucket = _.chain(outputs)
-  .map(row => [distance(row[0]), row[3]])
-  .sortBy(row => row[0])
-  .slice(0, k)
-  .countBy(row => row[1])
-  .toPairs()
-  .sortBy(row => row[1])
-  .last()
-  .first()
-  .parseInt()
-  .value()
+  let numberCorrect = 0
+  for (let i = 0; i < testSet.length; i++) {
+    const bucket = knn(trainngSet, testSet[i][0]);
+    if (bucket === testSet[i][3]) {
+      numberCorrect++
+    }
+  }
+  console.log('Accuracy:', numberCorrect / testSize);
+};
 
-  console.log('Your point will problably fall into', bucket);
-}
+const knn = (data, point) => {
+  return _.chain(outputs)
+    .map((row) => [distance(row[0]), row[3]])
+    .sortBy((row) => row[0])
+    .slice(0, k)
+    .countBy((row) => row[1])
+    .toPairs()
+    .sortBy((row) => row[1])
+    .last()
+    .first()
+    .parseInt()
+    .value();
+};
 
+const distance = (pointA, pointB) => Math.abs(pointA - pointB);
+
+const splitDataset = (data, testCount) => {
+  const shuffled = _.shuffle(data);
+
+  const testSet = _.slice(shuffled, 0, testCount);
+  const trainingSet = _.slice(shuffled, testCount);
+
+  return [testSet, trainingSet];
+};
