@@ -19,21 +19,21 @@ const minMax = (data, featureCount) => {
 
   for (let i = 0; i < featureCount; i++) {
     const column = clonedData.map((row) => row[i])
-
     const min = _.min(column)
     const max = _.max(column)
-
+    
     for (let j = 0; j < clonedData.length; j++) {
       clonedData[j][i] = (clonedData[j][i] - min) / (max - min)
     }
   }
+  return clonedData
 }
 
 const runAnalysis = () => {
-  const testSetSize = 10
-  const [testSet, trainngSet] = splitDataset(outputs, 10)
+  const testSetSize = 100
+  const [testSet, trainngSet] = splitDataset(minMax(outputs, 3), 10)
  
-  _.range(1, 11).forEach((k) => {
+  _.range(1, 20).forEach((k) => {
     const accuracy = _.chain(testSet)
       .filter(
         (testPoint) => knn(trainngSet, _.initial(testPoint), k) === testPoint[3]
