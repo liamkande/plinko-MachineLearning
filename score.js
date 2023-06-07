@@ -21,7 +21,7 @@ const minMax = (data, featureCount) => {
     const column = clonedData.map((row) => row[i])
     const min = _.min(column)
     const max = _.max(column)
-    
+
     for (let j = 0; j < clonedData.length; j++) {
       clonedData[j][i] = (clonedData[j][i] - min) / (max - min)
     }
@@ -32,19 +32,20 @@ const minMax = (data, featureCount) => {
 const runAnalysis = () => {
   const testSetSize = 100
   const k = 10
- 
-  _.range(0, 3).forEach(feature => {
-    const data = _.map(outputs, row => [row[feature], _.last(row)])
+
+  _.range(0, 3).forEach((feature) => {
+    const data = _.map(outputs, (row) => [row[feature], _.last(row)])
     const [testSet, trainngSet] = splitDataset(minMax(data, 1), testSetSize)
     const accuracy = _.chain(testSet)
       .filter(
-        (testPoint) => knn(trainngSet, _.initial(testPoint), k) === _.last(testPoint)
+        (testPoint) =>
+          knn(trainngSet, _.initial(testPoint), k) === _.last(testPoint)
       )
       .size()
       .divide(testSetSize)
       .value()
 
-    console.log("For feature of", feature, "accuracy is:", accuracy)
+    console.log(`For feature of ${feature} accuracy is: ${accuracy}`)
   })
 }
 
