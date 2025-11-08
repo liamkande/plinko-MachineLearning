@@ -173,12 +173,6 @@ const App: React.FC = () => {
                                 </h1>
 
                             </div>
-                            {/*{!canAnalyze && (*/}
-                            {/*    <p className="data-hint">*/}
-                            {/*        <TrendingUp size={16} />*/}
-                            {/*        Need {110 - outputs.length} more Samples*/}
-                            {/*    </p>*/}
-                            {/*)}*/}
                             <div className="analyze-section">
                                 <div className="progress-container">
                                     <div className="progress-header">

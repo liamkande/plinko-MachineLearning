@@ -72,7 +72,7 @@ export const usePlinko = (
                     {
                         isStatic: true,
                         render: {
-                            fillStyle: '#ffffff',
+                            fillStyle: '#d1d1d6',
                         },
                     }
                 );
