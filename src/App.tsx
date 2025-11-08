@@ -167,7 +167,7 @@ const App: React.FC = () => {
                         <div className="canvas-header">
                             <div className="canvas-title">
                                 <h1 className="title">
-                                    <img src="src/logo.svg" alt="Logo" className="title-logo" />
+                                    <img src="/logo.svg" alt="Logo" className="title-logo" />
                                     Plinko ML
                                     <Sparkles className="title-icon" />
                                 </h1>
