@@ -334,11 +334,7 @@ const App: React.FC = () => {
             <span className="footer-built-by">
               {' '}
               Built by{' '}
-              <a
-                href="https://github.com/liamkande/plinko-MachineLearning"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href="https://liamkande.com/" target="_blank" rel="noreferrer">
                 @LiamKande
               </a>
             </span>
