@@ -327,6 +327,24 @@ const App: React.FC = () => {
           </Button>
         </aside>
       </div>
+      <footer className="footer">
+        <div className="footer-content">
+          <span className="footer-copyright">
+            © {new Date().getFullYear()} Plinko ML. All rights reserved.
+            <span className="footer-built-by">
+              {' '}
+              Built by{' '}
+              <a
+                href="https://github.com/liamkande/plinko-MachineLearning"
+                target="_blank"
+                rel="noreferrer"
+              >
+                @LiamKande
+              </a>
+            </span>
+          </span>
+        </div>
+      </footer>
     </div>
   )
 }
