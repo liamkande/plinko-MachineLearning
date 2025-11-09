@@ -1,23 +1,16 @@
-import React from 'react';
-import './Input.css';
+import React from 'react'
+import './Input.css'
 
 interface InputProps {
-  label: string;
-  value: number;
-  onChange: (value: number) => void;
-  min?: number;
-  max?: number;
-  step?: number;
+  label: string
+  value: number
+  onChange: (value: number) => void
+  min?: number
+  max?: number
+  step?: number
 }
 
-export const Input: React.FC<InputProps> = ({
-  label,
-  value,
-  onChange,
-  min,
-  max,
-  step = 0.01,
-}) => {
+export const Input: React.FC<InputProps> = ({ label, value, onChange, min, max, step = 0.01 }) => {
   return (
     <div className="input-group">
       <label className="input-label">{label}</label>
@@ -31,5 +24,5 @@ export const Input: React.FC<InputProps> = ({
         step={step}
       />
     </div>
-  );
-};
+  )
+}

@@ -1,136 +1,133 @@
 .button {
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 600;
-    padding: 12px 24px;
-    border-radius: 16px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    outline: none;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    position: relative;
-    overflow: hidden;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
 }
 
 .button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(0);
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0);
 }
 
 .button:hover::before {
-    transform: scale(1);
+  transform: scale(1);
 }
 
-
-
 .button-icon {
-    display: flex;
-    align-items: center;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .button:hover .button-icon {
-    transform: scale(1.1) rotate(5deg);
+  transform: scale(1.1) rotate(5deg);
 }
 
 .button:active {
-    transform: scale(0.96);
+  transform: scale(0.96);
 }
 
 .button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .button:disabled:hover::before {
-    width: 0;
-    height: 0;
+  width: 0;
+  height: 0;
 }
 
 .button-primary {
-    background: linear-gradient(135deg, #56CCF2 0%, #2F80ED 100%);
-    color: white;
-    box-shadow: 0 8px 24px rgba(86, 204, 242, 0.4);
+  background: linear-gradient(135deg, #56ccf2 0%, #2f80ed 100%);
+  color: white;
+  box-shadow: 0 8px 24px rgba(86, 204, 242, 0.4);
 }
 
 .button-primary:hover:not(:disabled) {
-    box-shadow: 0 12px 32px rgba(86, 204, 242, 0.6);
-    transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(86, 204, 242, 0.6);
+  transform: translateY(-2px);
 }
 
 .button-secondary {
-    background: linear-gradient(135deg, #6B7280 0%, #9CA3AF 50%, #D1D5DB 100%);
-    color: white;
-    font-size: 20px;
-    font-weight: 700;
-    padding: 24px 48px;
-    box-shadow: 0 12px 40px rgba(107, 114, 128, 0.4);
-    border: 3px solid rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #6b7280 0%, #9ca3af 50%, #d1d5db 100%);
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 24px 48px;
+  box-shadow: 0 12px 40px rgba(107, 114, 128, 0.4);
+  border: 3px solid rgba(255, 255, 255, 0.3);
 }
 
 .button-secondary:hover:not(:disabled) {
-    box-shadow: 0 16px 56px rgba(107, 114, 128, 0.8);
-    transform: translateY(-3px) scale(1.03);
-    animation: none;
+  box-shadow: 0 16px 56px rgba(107, 114, 128, 0.8);
+  transform: translateY(-3px) scale(1.03);
+  animation: none;
 }
 
 .button-secondary .button-icon {
-    font-size: 28px;
-    animation: iconSpin 4s linear infinite;
+  font-size: 28px;
+  animation: iconSpin 4s linear infinite;
 }
 
-
-
 .button-analyze {
-    background: linear-gradient(135deg, #FF9A8B 0%, #FF6A88 50%, #FF99AC 100%);
-    color: white;
-    font-size: 20px;
-    font-weight: 700;
-    padding: 24px 48px;
-    box-shadow: 0 12px 40px rgba(255, 154, 139, 0.6);
-    animation: analyzeButtonPulse 3s ease-in-out infinite;
-    border: 3px solid rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #ff9a8b 0%, #ff6a88 50%, #ff99ac 100%);
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 24px 48px;
+  box-shadow: 0 12px 40px rgba(255, 154, 139, 0.6);
+  animation: analyzeButtonPulse 3s ease-in-out infinite;
+  border: 3px solid rgba(255, 255, 255, 0.3);
 }
 
 .button-analyze:hover:not(:disabled) {
-    box-shadow: 0 16px 56px rgba(255, 154, 139, 0.8);
-    transform: translateY(-3px) scale(1.03);
-    animation: none;
+  box-shadow: 0 16px 56px rgba(255, 154, 139, 0.8);
+  transform: translateY(-3px) scale(1.03);
+  animation: none;
 }
 
 .button-analyze .button-icon {
-    font-size: 28px;
-    animation: iconSpin 4s linear infinite;
+  font-size: 28px;
+  animation: iconSpin 4s linear infinite;
 }
 
 @keyframes analyzeButtonPulse {
-    0%, 100% {
-        box-shadow: 0 12px 40px rgba(255, 154, 139, 0.6);
-        transform: scale(1);
-    }
-    50% {
-        box-shadow: 0 16px 48px rgba(255, 154, 139, 0.8);
-        transform: scale(1.02);
-    }
+  0%,
+  100% {
+    box-shadow: 0 12px 40px rgba(255, 154, 139, 0.6);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 16px 48px rgba(255, 154, 139, 0.8);
+    transform: scale(1.02);
+  }
 }
 
 @keyframes iconSpin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -1,188 +1,186 @@
-import { useEffect, useRef, useCallback } from 'react';
-import Matter, {Render} from 'matter-js';
-import { BallData, PlinkoConfig } from '../types';
+import { useEffect, useRef, useCallback } from 'react'
+import Matter, { Render } from 'matter-js'
+import { BallData, PlinkoConfig } from '../types'
 
-const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 600;
-const BUCKET_COUNT = 10;
-const PEG_COUNT = 14;
+const CANVAS_WIDTH = 800
+const CANVAS_HEIGHT = 600
+const BUCKET_COUNT = 10
+const PEG_COUNT = 14
 
 export const usePlinko = (
-    canvasRef: React.RefObject<HTMLDivElement | null>,
-    config: PlinkoConfig,
-    onBallLanded: (data: BallData) => void
+  canvasRef: React.RefObject<HTMLDivElement | null>,
+  config: PlinkoConfig,
+  onBallLanded: (data: BallData) => void
 ) => {
-    const engineRef = useRef<Matter.Engine | null>(null);
-    const renderRef = useRef<Matter.Render | null>(null);
-    const ballsRef = useRef<Map<number, { pos: number; bounce: number; size: number }>>(new Map());
+  const engineRef = useRef<Matter.Engine | null>(null)
+  const renderRef = useRef<Matter.Render | null>(null)
+  const ballsRef = useRef<Map<number, { pos: number; bounce: number; size: number }>>(new Map())
 
-    const initializeWorld = useCallback(() => {
-        if (!canvasRef.current) return;
+  const initializeWorld = useCallback(() => {
+    if (!canvasRef.current) return
 
-        const { Engine, Render, World, Bodies, Events } = Matter;
+    const { Engine, Render, World, Bodies, Events } = Matter
 
-        const engine = Engine.create({
-            gravity: { x: 0, y: 1 }
-        });
+    const engine = Engine.create({
+      gravity: { x: 0, y: 1 },
+    })
 
-        const render = Render.create({
-            element: canvasRef.current,
-            engine: engine,
-            options: {
-                width: CANVAS_WIDTH,
-                height: CANVAS_HEIGHT,
-                wireframes: false,
-                background: 'transparent',
-            },
-        });
+    const render = Render.create({
+      element: canvasRef.current,
+      engine: engine,
+      options: {
+        width: CANVAS_WIDTH,
+        height: CANVAS_HEIGHT,
+        wireframes: false,
+        background: 'transparent',
+      },
+    })
 
-        // Create boundaries
-        const boundaries = [
-            Bodies.rectangle(CANVAS_WIDTH / 2, CANVAS_HEIGHT, CANVAS_WIDTH, 40, {
-                isStatic: true,
-                render: { fillStyle: 'rgba(255, 255, 255, 0.1)' },
-            }),
-            Bodies.rectangle(0, CANVAS_HEIGHT / 2, 40, CANVAS_HEIGHT, {
-                isStatic: true,
-                render: { fillStyle: 'rgba(255, 255, 255, 0.1)' },
-            }),
-            Bodies.rectangle(CANVAS_WIDTH, CANVAS_HEIGHT / 2, 40, CANVAS_HEIGHT, {
-                isStatic: true,
-                render: { fillStyle: 'rgba(255, 255, 255, 0.1)' },
-            }),
-        ];
+    // Create boundaries
+    const boundaries = [
+      Bodies.rectangle(CANVAS_WIDTH / 2, CANVAS_HEIGHT, CANVAS_WIDTH, 40, {
+        isStatic: true,
+        render: { fillStyle: 'rgba(255, 255, 255, 0.1)' },
+      }),
+      Bodies.rectangle(0, CANVAS_HEIGHT / 2, 40, CANVAS_HEIGHT, {
+        isStatic: true,
+        render: { fillStyle: 'rgba(255, 255, 255, 0.1)' },
+      }),
+      Bodies.rectangle(CANVAS_WIDTH, CANVAS_HEIGHT / 2, 40, CANVAS_HEIGHT, {
+        isStatic: true,
+        render: { fillStyle: 'rgba(255, 255, 255, 0.1)' },
+      }),
+    ]
 
-        // Create pegs in triangular pattern
-        const pegs: Matter.Body[] = [];
-        const pegRadius = 5;
-        const startY = 100;
-        const spacingY = 35;
-        const spacingX = 40;
+    // Create pegs in triangular pattern
+    const pegs: Matter.Body[] = []
+    const pegRadius = 5
+    const startY = 100
+    const spacingY = 35
+    const spacingX = 40
 
-        for (let row = 0; row < PEG_COUNT; row++) {
-            const pegCountInRow = row + 3;
-            const rowWidth = pegCountInRow * spacingX;
-            const startX = (CANVAS_WIDTH - rowWidth) / 2 + spacingX / 2;
+    for (let row = 0; row < PEG_COUNT; row++) {
+      const pegCountInRow = row + 3
+      const rowWidth = pegCountInRow * spacingX
+      const startX = (CANVAS_WIDTH - rowWidth) / 2 + spacingX / 2
 
-            for (let col = 0; col < pegCountInRow; col++) {
-                const peg = Bodies.circle(
-                    startX + col * spacingX,
-                    startY + row * spacingY,
-                    pegRadius,
-                    {
-                        isStatic: true,
-                        render: {
-                            fillStyle: '#d1d1d6',
-                        },
-                    }
-                );
-                pegs.push(peg);
-            }
+      for (let col = 0; col < pegCountInRow; col++) {
+        const peg = Bodies.circle(startX + col * spacingX, startY + row * spacingY, pegRadius, {
+          isStatic: true,
+          render: {
+            fillStyle: '#d1d1d6',
+          },
+        })
+        pegs.push(peg)
+      }
+    }
+
+    // Create bucket sensors
+    const bucketWidth = CANVAS_WIDTH / BUCKET_COUNT
+    const buckets: Matter.Body[] = []
+
+    for (let i = 0; i < BUCKET_COUNT; i++) {
+      const bucket = Bodies.rectangle(
+        bucketWidth * i + bucketWidth / 2,
+        CANVAS_HEIGHT - 20,
+        bucketWidth - 2,
+        40,
+        {
+          isStatic: true,
+          isSensor: true,
+          label: `bucket-${i}`,
+          render: {
+            fillStyle: 'rgba(255, 255, 255, 0.2)',
+          },
         }
+      )
+      buckets.push(bucket)
+    }
 
-        // Create bucket sensors
-        const bucketWidth = CANVAS_WIDTH / BUCKET_COUNT;
-        const buckets: Matter.Body[] = [];
+    World.add(engine.world, [...boundaries, ...pegs, ...buckets])
 
-        for (let i = 0; i < BUCKET_COUNT; i++) {
-            const bucket = Bodies.rectangle(
-                bucketWidth * i + bucketWidth / 2,
-                CANVAS_HEIGHT - 20,
-                bucketWidth - 2,
-                40,
-                {
-                    isStatic: true,
-                    isSensor: true,
-                    label: `bucket-${i}`,
-                    render: {
-                        fillStyle: 'rgba(255, 255, 255, 0.2)',
-                    },
-                }
-            );
-            buckets.push(bucket);
+    // Handle collisions with buckets
+    Events.on(engine, 'collisionStart', (event) => {
+      event.pairs.forEach((pair) => {
+        const { bodyA, bodyB } = pair
+        const bucket = bodyA.label?.startsWith('bucket-') ? bodyA : bodyB
+        const ball = bodyA.label?.startsWith('bucket-') ? bodyB : bodyA
+
+        if (bucket.label?.startsWith('bucket-') && ball.label === 'ball') {
+          const bucketIndex = parseInt(bucket.label.split('-')[1])
+          const ballData = ballsRef.current.get(ball.id)
+
+          if (ballData) {
+            onBallLanded({
+              dropPosition: ballData.pos,
+              bounciness: ballData.bounce,
+              size: ballData.size,
+              bucketLabel: bucketIndex,
+            })
+
+            ballsRef.current.delete(ball.id)
+            setTimeout(() => {
+              World.remove(engine.world, ball)
+            }, 1000)
+          }
         }
+      })
+    })
 
-        World.add(engine.world, [...boundaries, ...pegs, ...buckets]);
+    Engine.run(engine)
+    Render.run(render)
 
-        // Handle collisions with buckets
-        Events.on(engine, 'collisionStart', (event) => {
-            event.pairs.forEach((pair) => {
-                const { bodyA, bodyB } = pair;
-                const bucket = bodyA.label?.startsWith('bucket-') ? bodyA : bodyB;
-                const ball = bodyA.label?.startsWith('bucket-') ? bodyB : bodyA;
+    engineRef.current = engine
+    renderRef.current = render
+  }, [canvasRef, onBallLanded])
 
-                if (bucket.label?.startsWith('bucket-') && ball.label === 'ball') {
-                    const bucketIndex = parseInt(bucket.label.split('-')[1]);
-                    const ballData = ballsRef.current.get(ball.id);
+  const dropBall = useCallback(
+    (x: number) => {
+      if (!engineRef.current) return
 
-                    if (ballData) {
-                        onBallLanded({
-                            dropPosition: ballData.pos,
-                            bounciness: ballData.bounce,
-                            size: ballData.size,
-                            bucketLabel: bucketIndex,
-                        });
+      const { World, Bodies } = Matter
+      const bounciness = config.coefStart + Math.random() * (config.coefEnd - config.coefStart)
+      const size = config.sizeStart + Math.random() * (config.sizeEnd - config.sizeStart)
 
-                        ballsRef.current.delete(ball.id);
-                        setTimeout(() => {
-                            World.remove(engine.world, ball);
-                        }, 1000);
-                    }
-                }
-            });
-        });
+      const ball = Bodies.circle(x, 50, size, {
+        restitution: bounciness,
+        friction: 0.1,
+        label: 'ball',
+        render: {
+          fillStyle: `hsl(${Math.random() * 360}, 70%, 60%)`,
+        },
+      })
 
-        Engine.run(engine);
-        Render.run(render);
+      ballsRef.current.set(ball.id, { pos: x, bounce: bounciness, size })
+      World.add(engineRef.current.world, ball)
+    },
+    [config]
+  )
 
-        engineRef.current = engine;
-        renderRef.current = render;
-    }, [canvasRef, onBallLanded]);
+  const reset = useCallback(() => {
+    if (engineRef.current && renderRef.current) {
+      Matter.World.clear(engineRef.current.world, false)
+      Matter.Engine.clear(engineRef.current)
+      Render.stop(renderRef.current)
+      renderRef.current.canvas.remove()
+      ballsRef.current.clear()
+      initializeWorld()
+    }
+  }, [initializeWorld])
 
-    const dropBall = useCallback((x: number) => {
-        if (!engineRef.current) return;
+  useEffect(() => {
+    initializeWorld()
 
-        const { World, Bodies } = Matter;
-        const bounciness = config.coefStart + Math.random() * (config.coefEnd - config.coefStart);
-        const size = config.sizeStart + Math.random() * (config.sizeEnd - config.sizeStart);
+    return () => {
+      if (engineRef.current) {
+        Matter.Engine.clear(engineRef.current)
+      }
+      if (renderRef.current) {
+        Render.stop(renderRef.current)
+        renderRef.current.canvas.remove()
+      }
+    }
+  }, [initializeWorld])
 
-        const ball = Bodies.circle(x, 50, size, {
-            restitution: bounciness,
-            friction: 0.1,
-            label: 'ball',
-            render: {
-                fillStyle: `hsl(${Math.random() * 360}, 70%, 60%)`,
-            },
-        });
-
-        ballsRef.current.set(ball.id, { pos: x, bounce: bounciness, size });
-        World.add(engineRef.current.world, ball);
-    }, [config]);
-
-    const reset = useCallback(() => {
-        if (engineRef.current && renderRef.current) {
-            Matter.World.clear(engineRef.current.world, false);
-            Matter.Engine.clear(engineRef.current);
-            Render.stop(renderRef.current);
-            renderRef.current.canvas.remove();
-            ballsRef.current.clear();
-            initializeWorld();
-        }
-    }, [initializeWorld]);
-
-    useEffect(() => {
-        initializeWorld();
-
-        return () => {
-            if (engineRef.current) {
-                Matter.Engine.clear(engineRef.current);
-            }
-            if (renderRef.current) {
-                Render.stop(renderRef.current);
-                renderRef.current.canvas.remove();
-            }
-        };
-    }, [initializeWorld]);
-
-    return { dropBall, reset };
-};
+  return { dropBall, reset }
+}

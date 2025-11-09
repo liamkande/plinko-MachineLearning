@@ -17,17 +17,17 @@ This project simulates a Plinko board where balls drop through pegs and land in 
 - **⚡ Real-time Physics**: Matter.js powered physics simulation
 - **🎯 10 Bucket System**: Balls land in one of 10 buckets with live count tracking
 - **🎪 Customizable Ball Properties**:
-    - Adjustable bounciness coefficient (0.0 - 1.0)
-    - Variable ball size (1.0 - 30.0)
-    - Randomization ranges for both parameters
+  - Adjustable bounciness coefficient (0.0 - 1.0)
+  - Variable ball size (1.0 - 30.0)
+  - Randomization ranges for both parameters
 - **🎮 Multiple Drop Modes**:
-    - Click to drop individual balls
-    - Batch drop at various positions with custom spacing
-    - Batch drop at a single position for consistency testing
-- **📊 Visual Analytics**: 
-    - Real-time data collection progress bar
-    - Prediction accuracy visualization
-    - Animated result charts
+  - Click to drop individual balls
+  - Batch drop at various positions with custom spacing
+  - Batch drop at a single position for consistency testing
+- **📊 Visual Analytics**:
+  - Real-time data collection progress bar
+  - Prediction accuracy visualization
+  - Animated result charts
 - **🔄 Reset Functionality**: Clear all data and restart simulation
 - **💫 Animated Icons**: Lucide React icons with custom animations
 - **📱 Responsive Design**: Works on various screen sizes
@@ -63,11 +63,13 @@ plinko-ml-react/
 ## Dependencies
 
 ### Core
+
 - [React](https://react.dev/) (v19.0.0) - UI library
 - [TypeScript](https://www.typescriptlang.org/) (v5.3.3) - Type-safe JavaScript
 - [Vite](https://vitejs.dev/) (v5.0.0) - Build tool and dev server
 
 ### Libraries
+
 - [Matter.js](https://brm.io/matter-js/) (v0.19.0) - 2D physics engine
 - [Lodash](https://lodash.com/) (v4.17.21) - Utility library for ML operations
 - [Lucide React](https://lucide.dev/) (v0.294.0) - Beautiful animated icons
@@ -77,17 +79,20 @@ plinko-ml-react/
 ### Installation
 
 1. Clone or download the project
+
 ```bash
 git clone https://github.com/liamkande/plinko-MachineLearning.git
 cd plinko-MachineLearning
 ```
 
 2. Install dependencies
+
 ```bash
 yarn install
 ```
 
 3. Start development server
+
 ```bash
 yarn run dev
 ```
@@ -150,6 +155,7 @@ yarn run preview
 ### K-Nearest Neighbors (KNN) Algorithm
 
 The app uses the KNN algorithm to predict which bucket a ball will land in based on:
+
 - **Drop Position**: Where the ball enters the board (x-coordinate)
 - **Bounciness**: The restitution coefficient of the ball
 - **Ball Size**: The radius of the ball

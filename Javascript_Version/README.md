@@ -11,16 +11,17 @@ This project simulates a Plinko board where balls drop through pegs and land in 
 - **Interactive Physics Simulation**: Real-time Plinko game using Matter.js physics engine
 - **10 Bucket System**: Balls land in one of 10 buckets at the bottom
 - **Customizable Ball Properties**:
-    - Adjustable bounciness coefficient (0.0 - 1.0)
-    - Variable ball size (1.0 - 30.0)
+  - Adjustable bounciness coefficient (0.0 - 1.0)
+  - Variable ball size (1.0 - 30.0)
 - **Multiple Drop Modes**:
-    - Click to drop individual balls
-    - Drop multiple balls at various positions with custom spacing
-    - Drop multiple balls at a single position
+  - Click to drop individual balls
+  - Drop multiple balls at various positions with custom spacing
+  - Drop multiple balls at a single position
 - **Data Collection**: Track which bucket each ball lands in for analysis
 - **Reset Functionality**: Clear all data and start fresh
 
 ## Project Structure
+
 ```
 plinko-MachineLearning-main/
 ├── index.html          # Main HTML structure
@@ -29,7 +30,6 @@ plinko-MachineLearning-main/
 ├── index.js        # Core game logic and physics
 └── style.css       # Styling
 ```
-
 
 ## Dependencies
 
@@ -49,14 +49,17 @@ plinko-MachineLearning-main/
 ## Usage
 
 ### Single Ball Drop
+
 - Set desired ball properties in the range fields
 - Click anywhere on the Plinko board to drop balls
 
 ### Batch Drops
+
 - **Various Spots**: Drop multiple balls at evenly spaced positions
 - **Single Spot**: Drop multiple balls from the same position for consistency testing
 
 ### Analysis
+
 - Use the "Analyze!" button to process the collected data and generate insights
 
 ## Use Cases

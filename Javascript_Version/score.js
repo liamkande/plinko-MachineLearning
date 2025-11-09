@@ -37,10 +37,7 @@ const runAnalysis = () => {
     const data = _.map(outputs, (row) => [row[feature], _.last(row)])
     const [testSet, trainngSet] = splitDataset(minMax(data, 1), testSetSize)
     const accuracy = _.chain(testSet)
-      .filter(
-        (testPoint) =>
-          knn(trainngSet, _.initial(testPoint), k) === _.last(testPoint)
-      )
+      .filter((testPoint) => knn(trainngSet, _.initial(testPoint), k) === _.last(testPoint))
       .size()
       .divide(testSetSize)
       .value()
