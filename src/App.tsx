@@ -30,7 +30,7 @@ const App: React.FC = () => {
     coefStart: 0.5,
     coefEnd: 0.55,
     sizeStart: 16,
-    sizeEnd: 17,
+    sizeEnd: 18,
     dropQuantity: 1,
   })
 
