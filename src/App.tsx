@@ -335,7 +335,7 @@ const App: React.FC = () => {
               {' '}
               Built by{' '}
               <a href="https://liamkande.com/" target="_blank" rel="noreferrer">
-                @LiamKande
+                <img src="/logo.svg" alt="Logo" width="35" height="35" />
               </a>
             </span>
           </span>
