@@ -611,8 +611,8 @@
 }
 
 .title-logo {
-    width: clamp(40px, 8vw, 60px);
-    height: clamp(40px, 8vw, 60px);
+    width: clamp(32px, 8vw, 40px);
+    height: clamp(32px, 8vw, 40px);
     margin-right: -20px;
 }
 

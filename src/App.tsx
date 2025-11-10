@@ -162,7 +162,9 @@ const App: React.FC = () => {
             <div className="canvas-header">
               <div className="canvas-title">
                 <h1 className="title">
-                  <img src="/logo.svg" alt="Logo" className="title-logo" />
+                  <a href="https://liamkande.com/" target="_blank" rel="noreferrer">
+                    <img src="/logo.svg" alt="Logo" className="title-logo" />
+                  </a>
                   Plinko ML
                   <Sparkles className="title-icon" />
                 </h1>
