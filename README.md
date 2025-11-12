@@ -8,7 +8,7 @@ A modern browser-based Plinko simulation and machine learning prediction model b
 
 ## Overview
 
-This project simulates a Plinko board where balls drop through pegs and land in buckets. It collects data about ball trajectories based on different parameters and uses K-Nearest Neighbors machine learning algorithm to analyze prediction accuracy. The app features a beautiful, modern UI inspired by Apple's design language with sky blue and peach color themes.
+This project simulates a Plinko board where balls drop through pegs and land in buckets. It collects data about ball trajectories based on different parameters and uses K-Nearest Neighbors machine learning algorithm to analyze prediction accuracy.
 
 ## Features
 
